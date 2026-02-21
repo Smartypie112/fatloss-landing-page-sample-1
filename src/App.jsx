@@ -8,6 +8,7 @@ import Unsure from "./components/Unsure";
 import Testimonials from "./components/Testimonials";
 import FinalCTA from "./components/FinalCTA";
 import ExitIntent from "./components/ExitIntent";
+import Navbar from "./components/Navbar";
 import Apply from "./components/Apply";
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
   return (
     <>
       <ExitIntent forceShow={triggerExitReminder} />
-
+     <Navbar onApplyClick={handleApplyClick} />
       <Hero onApplyClick={handleApplyClick} />
       <Results />
       <FloatingCTA onApplyClick={handleApplyClick} />
