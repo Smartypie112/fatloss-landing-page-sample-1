@@ -5,7 +5,7 @@ export default function Navbar({ onApplyClick }) {
     <nav className="bg-black text-white px-6 py-4 flex items-center justify-between">
       
       {/* Logo */}
-      <div className="text-xl font-extrabold tracking-wide">
+      <div className="text-2xl font-extrabold tracking-wide">
         <span className="text-white">Fit</span>
         <span className="text-lime-500">12</span>
       </div>
