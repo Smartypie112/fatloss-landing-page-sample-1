@@ -5,7 +5,7 @@ const Hero = ({ onApplyClick }) => {
     <section id="hero" className=" bg-black text-white flex flex-col justify-center items-center px-6 relative pt-10">
 
       {/* Headline */}
-<div className="max-w-6xl w-full mx-auto">
+<div className=" max-w-6xl w-full mx-auto">
   <div className="max-w-3xl ">
 
 <h1 className="font-anton text-5xl md:text-5xl font-black leading-tight text-left tracking-tight">
@@ -25,11 +25,10 @@ const Hero = ({ onApplyClick }) => {
 >
   👉 &nbsp; Apply Now →
 </button>
-    </div>
-
     <p className="text-gray-500 text-xs mt-6 text-center">
       No crash diets • No extreme workouts • Personalized
     </p>
+    </div>
 
   </div>
 </div>

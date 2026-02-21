@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Hero from "./components/Hero";
 import Results from "./components/Results";
 import FloatingCTA from "./components/FloatingCTA";
@@ -12,6 +12,28 @@ import Apply from "./components/Apply";
 
 function App() {
   const [showApply, setShowApply] = useState(false);
+  const [triggerExitReminder, setTriggerExitReminder] = useState(false);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (showApply) {
+        // Instead of instantly going back
+        setShowApply(false);
+        setTriggerExitReminder(true);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [showApply]);
+
+  const handleApplyClick = () => {
+    window.history.pushState({ apply: true }, "", "#apply");
+    setShowApply(true);
+  };
 
   if (showApply) {
     return <Apply />;
@@ -19,15 +41,16 @@ function App() {
 
   return (
     <>
-      <ExitIntent />
-      <Hero onApplyClick={() => setShowApply(true)} />
+      <ExitIntent forceShow={triggerExitReminder} />
+
+      <Hero onApplyClick={handleApplyClick} />
       <Results />
-      <FloatingCTA onApplyClick={() => setShowApply(true)} />
+      <FloatingCTA onApplyClick={handleApplyClick} />
       <Problems />
       <Solutions />
       <Testimonials />
       <Unsure />
-      <FinalCTA onApplyClick={() => setShowApply(true)} />
+      <FinalCTA onApplyClick={handleApplyClick} />
     </>
   );
 }

@@ -1,43 +1,46 @@
 import { useEffect, useState, useRef } from "react";
 
-const ExitIntent = () => {
+const ExitIntent = ({ forceShow = false }) => {
   const [show, setShow] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
-    if (sessionStorage.getItem("exitIntentShown")) return;
+  if (forceShow) {
+    setShow(true);
+    return;
+  }
 
-    const triggerExit = () => {
-      if (!sessionStorage.getItem("exitIntentShown")) {
-        setShow(true);
-        sessionStorage.setItem("exitIntentShown", "true");
+  if (sessionStorage.getItem("exitIntentShown")) return;
+
+  const triggerExit = () => {
+    if (!sessionStorage.getItem("exitIntentShown")) {
+      setShow(true);
+      sessionStorage.setItem("exitIntentShown", "true");
+    }
+  };
+
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const fullHeight = document.body.scrollHeight;
+
+    const scrollPercent = (scrollTop + windowHeight) / fullHeight;
+
+    if (scrollPercent > 0.7) {
+      if (lastScrollY.current - scrollTop > 80) {
+        triggerExit();
       }
-    };
+    }
 
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const fullHeight = document.body.scrollHeight;
+    lastScrollY.current = scrollTop;
+  };
 
-      const scrollPercent = (scrollTop + windowHeight) / fullHeight;
+  window.addEventListener("scroll", handleScroll);
 
-      // If user saw 70% of page
-      if (scrollPercent > 0.7) {
-        // And scrolls up fast
-        if (lastScrollY.current - scrollTop > 80) {
-          triggerExit();
-        }
-      }
-
-      lastScrollY.current = scrollTop;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, [forceShow]);
 
   const handleStay = () => {
     setShow(false);
