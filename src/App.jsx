@@ -37,8 +37,8 @@ function App() {
   };
 
   if (showApply) {
-    return <Apply />;
-  }
+  return <Apply onCloseApply={() => setShowApply(false)} />;
+}
 
   return (
     <>

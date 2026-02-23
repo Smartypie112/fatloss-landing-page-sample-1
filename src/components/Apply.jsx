@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Apply = () => {
+const Apply = ({ onCloseApply }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
@@ -20,8 +20,11 @@ const Apply = () => {
 
     setError("");
 
-    // 👉 Here you will integrate payment gateway
-    alert("redirecting...");
+    // 👉 Payment integration can go here
+    
+
+    // ✅ Close the Apply page
+    onCloseApply();
   };
 
   return (
